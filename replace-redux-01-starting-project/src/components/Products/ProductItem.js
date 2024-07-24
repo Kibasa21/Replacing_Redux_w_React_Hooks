@@ -1,15 +1,15 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
 
 import Card from '../UI/Card';
 import './ProductItem.css';
-import { toggleFav } from '../../store/actions/products';
+import { useStore } from '../../hooks-store/store';
 
-const ProductItem = props => {
-  const dispatch = useDispatch();
+const ProductItem = React.memo(props => {//memo is used to prevent re-rendering of the component if the props are the same
+
+  const dispatch = useStore(false)[1];//false is used to prevent rendering all the components that are using the store, just the component that is using the store will be rendered
 
   const toggleFavHandler = () => {
-    dispatch(toggleFav(props.id));
+    dispatch('TOGGLE_FAV',props.id);
   };
 
   return (
@@ -26,6 +26,6 @@ const ProductItem = props => {
       </div>
     </Card>
   );
-};
+});
 
 export default ProductItem;
